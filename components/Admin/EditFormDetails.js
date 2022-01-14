@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Modal, SafeAreaView, ScrollView, StyleSheet, Text, View, Button, Alert, ToastAndroid } from 'react-native'
+import { Modal, SafeAreaView, ScrollView, StyleSheet, Text, View, Button, Alert, ToastAndroid, ActivityIndicator } from 'react-native'
 import Header from '../Header/Header'
 import { List, TextInput } from 'react-native-paper';
 import { db } from '../../firebase';
@@ -16,9 +16,17 @@ const EditFormDetails = ({ navigation }) => {
     const [Thekedaar, setThekedaar] = useState('');
 
     const [modalVisible, setModalVisible] = useState(false);
+    const [deleteModalVisible, setdeleteModalVisible] = useState(false);
+    const [ThekedaarDeletionValue, setThekedaarDeletionValue] = useState(0);
+
+    const [isBtnLoading, setIsBtnLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleExpandThekedaar = () => {
+        // console.log(ThekedaarMenu)
         if (ThekedaarMenu !== []) {
+            setIsLoading(true);
+
             db.collection('Thekedaar')
                 .orderBy("value", "desc")
                 .onSnapshot(snapshot => {
@@ -27,9 +35,15 @@ const EditFormDetails = ({ navigation }) => {
         }
 
         setExpandedThekedaar(!expandedThekedaar)
+
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 1000);
     }
 
     const addThekedaar = async () => {
+        setIsBtnLoading(true);
+
         var arr = []
         ThekedaarMenu.forEach(t => {
             arr.push(t.value);
@@ -44,12 +58,21 @@ const EditFormDetails = ({ navigation }) => {
             ToastAndroid.show('Thekedaar Added Successfully', ToastAndroid.SHORT)
             setThekedaar('');
             setModalVisible(false);
+            setIsBtnLoading(false)
         } else {
             ToastAndroid.show('Enter Name', ToastAndroid.SHORT)
+            setIsBtnLoading(false)
         }
     }
 
+    const handleDeleteModal = (value) => {
+        setdeleteModalVisible(!deleteModalVisible);
+        setThekedaarDeletionValue(value)
+    }
+
     const deleteThekedaar = async (id) => {
+        setIsBtnLoading(true);
+
         var data = db
             .collection("Thekedaar")
             .where("value", "==", id)
@@ -61,6 +84,9 @@ const EditFormDetails = ({ navigation }) => {
         })
 
         ToastAndroid.show('Deleted Successfully', ToastAndroid.SHORT)
+        setdeleteModalVisible(false)
+        setThekedaarDeletionValue(0);
+        setIsBtnLoading(false);
     }
 
     return (
@@ -93,14 +119,16 @@ const EditFormDetails = ({ navigation }) => {
                                 right={props => <List.Icon {...props} icon='plus' />}
                                 onPress={() => setModalVisible(true)}
                             />
-                            {ThekedaarMenu.filter(item => item.value !== 0).map(item => (
-                                <List.Item key={item.value} title={item.label} style={{ backgroundColor: 'white', width: '100%' }}
-                                    right={props => (
-                                        <TouchableOpacity onPress={() => deleteThekedaar(item.value)}>
-                                            <List.Icon {...props} icon='delete' color='red' />
-                                        </TouchableOpacity>
-                                    )} />
-                            ))}
+                            {isLoading ? <ActivityIndicator size='large' color='#841584' style={{ marginLeft: -70}} /> : <>
+                                {ThekedaarMenu.filter(item => item.value !== 0).map(item => (
+                                    <List.Item key={item.value} title={item.label} style={{ backgroundColor: 'white', width: '100%' }}
+                                        right={props => (
+                                            <TouchableOpacity onPress={() => handleDeleteModal(item.value)}>
+                                                <List.Icon {...props} icon='delete' color='red' />
+                                            </TouchableOpacity>
+                                        )} />
+                                ))}
+                            </>}
                         </List.Accordion>
 
                         {/* Rice */}
@@ -440,8 +468,42 @@ const EditFormDetails = ({ navigation }) => {
                                         <Button
                                             // style={{ backgroundColor: 'blue', color: 'white' }}
                                             onPress={() => addThekedaar()}
-                                            title="Add"
+                                            title={isBtnLoading ? 'Loading...' : 'Add'}
                                             color="#841584"
+                                            disabled={isBtnLoading}
+                                        />
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
+                    </View>
+
+                    {/* Thekedaar Delete Modal */}
+                    <View>
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={deleteModalVisible}
+                            onRequestClose={() => {
+                                Alert.alert("Modal has been closed.");
+                                setdeleteModalVisible(!deleteModalVisible)
+                            }}
+                        >
+                            <View style={styles.centeredView}>
+                                <View style={styles.modalView}>
+                                    <Text style={styles.modalText}>Are you sure you want the delete the selected Thekedaar?</Text>
+                                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                                        <Button
+                                            onPress={() => setdeleteModalVisible(false)}
+                                            title="Cancel"
+                                        />
+                                        <View style={{ marginRight: 20 }} />
+                                        <Button
+                                            // style={{ backgroundColor: 'blue', color: 'white' }}
+                                            onPress={() => deleteThekedaar(ThekedaarDeletionValue)}
+                                            title={isBtnLoading ? 'Deleting...' : 'Delete'}
+                                            color="red"
+                                            disabled={isBtnLoading}
                                         />
                                     </View>
                                 </View>

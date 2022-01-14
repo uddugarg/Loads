@@ -78,7 +78,7 @@ const HomeScreen = ({ navigation }) => {
             sellaQuality: '',
             steamQuality: '',
             bags: '',
-            report: '',
+            report: "",
             remarks: '',
         }
     });

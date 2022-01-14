@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Modal, SafeAreaView, ScrollView, StyleSheet, Text, ToastAndroid, View } from 'react-native'
+import { ActivityIndicator, Button, Modal, SafeAreaView, ScrollView, StyleSheet, Text, ToastAndroid, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { List, TextInput } from 'react-native-paper'
 import { db } from '../../firebase'
@@ -19,6 +19,8 @@ export class EditDropdownMenu extends Component {
             deletingLabel: '',
             deletingValue: 0,
             input: '',
+            isBtnLoading: false,
+            isLoading: false,
             // resetForm: this.props.route.params.resetForm,
         }
 
@@ -27,16 +29,23 @@ export class EditDropdownMenu extends Component {
         this.deleteData = this.deleteData.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        this.setState({ isLoading: true })
         // console.log(this.props.route.params.dbName)
-        db.collection(this.state.dbName)
+        await db.collection(this.state.dbName)
             .orderBy("value", "asc")
             .onSnapshot(snapshot => {
                 this.setState({ data: snapshot.docs.map(doc => doc.data()) })
             })
+
+            setTimeout(() => {
+                this.setState({ isLoading: false })
+            }, 1000)
     }
 
     addData = async () => {
+        this.setState({ isBtnLoading: true })
+
         var arr = []
         this.state.data.forEach(t => {
             arr.push(t.value);
@@ -49,9 +58,10 @@ export class EditDropdownMenu extends Component {
                 value: max + 1,
             })
             ToastAndroid.show('Field Added Successfully', ToastAndroid.SHORT)
-            this.setState({ input: '', modalVisible: false })
+            this.setState({ input: '', modalVisible: false, isBtnLoading: false })
         } else {
             ToastAndroid.show('Enter the text', ToastAndroid.SHORT)
+            this.setState({ isBtnLoading: false })
         }
     }
 
@@ -60,6 +70,8 @@ export class EditDropdownMenu extends Component {
     }
 
     deleteData = async (id) => {
+        this.setState({ isBtnLoading: true })
+
         var data = db
             .collection(this.state.dbName)
             .where("value", "==", id)
@@ -71,7 +83,7 @@ export class EditDropdownMenu extends Component {
         })
 
         ToastAndroid.show('Deleted Successfully', ToastAndroid.SHORT)
-        this.setState({ deletingLabel: '', deletingValue: 0, deleteModalVisible: false })
+        this.setState({ deletingLabel: '', deletingValue: 0, deleteModalVisible: false, isBtnLoading: false })
     }
 
     render() {
@@ -90,29 +102,33 @@ export class EditDropdownMenu extends Component {
                             marginTop: '5%'
                         }}>
                         <List.Section style={{ width: '80%', backgroundColor: 'black' }} title="Accordions">
-                            <List.Accordion
-                                title={this.state.name}
-                                description='Add/Delete Items'
-                                left={props => <List.Icon {...props} icon="pen" />}
-                                expanded={this.state.expand}
-                                onPress={() => this.setState({ expand: !this.state.expand })}>
-                                <List.Item
-                                    title="Add New"
-                                    style={{ backgroundColor: 'white', width: '100%', borderBottomWidth: 1, borderColor: 'lightgrey' }}
-                                    right={props => <List.Icon {...props} icon='plus' />}
-                                    onPress={() => this.setState({ modalVisible: true })}
-                                />
-                                {this.state.data.filter(item => item.value !== 0).map(item => (
-                                    <List.Item key={item.value} title={item.label} style={{ backgroundColor: 'white', width: '100%' }}
-                                        right={props => (
-                                            <TouchableOpacity
-                                                onPress={() => this.handleDeleteModal(item.label, item.value)}
-                                            >
-                                                <List.Icon {...props} icon='delete' color='red' />
-                                            </TouchableOpacity>
-                                        )} />
-                                ))}
-                            </List.Accordion>
+                            {this.state.isLoading ?
+                                <ActivityIndicator size='large' color='#841584' />
+                                :
+                                <List.Accordion
+                                    title={this.state.name}
+                                    description='Add/Delete Items'
+                                    left={props => <List.Icon {...props} icon="pen" />}
+                                    expanded={this.state.expand}
+                                    onPress={() => this.setState({ expand: !this.state.expand })}>
+                                    <List.Item
+                                        title="Add New"
+                                        style={{ backgroundColor: 'white', width: '100%', borderBottomWidth: 1, borderColor: 'lightgrey' }}
+                                        right={props => <List.Icon {...props} icon='plus' />}
+                                        onPress={() => this.setState({ modalVisible: true })}
+                                    />
+                                    {this.state.data.filter(item => item.value !== 0).map(item => (
+                                        <List.Item key={item.value} title={item.label} style={{ backgroundColor: 'white', width: '100%' }}
+                                            right={props => (
+                                                <TouchableOpacity
+                                                    onPress={() => this.handleDeleteModal(item.label, item.value)}
+                                                >
+                                                    <List.Icon {...props} icon='delete' color='red' />
+                                                </TouchableOpacity>
+                                            )} />
+                                    ))}
+                                </List.Accordion>
+                            }
                         </List.Section>
 
                         {/* Add new modal */}
@@ -149,8 +165,9 @@ export class EditDropdownMenu extends Component {
                                             <Button
                                                 // style={{ backgroundColor: 'blue', color: 'white' }}
                                                 onPress={() => this.addData()}
-                                                title="Add"
+                                                title={this.state.isBtnLoading ? 'Loading...' : 'Add'}
                                                 color="#841584"
+                                                disabled={this.state.isBtnLoading}
                                             />
                                         </View>
                                     </View>
@@ -181,8 +198,9 @@ export class EditDropdownMenu extends Component {
                                             <Button
                                                 // style={{ backgroundColor: 'blue', color: 'white' }}
                                                 onPress={() => this.deleteData(this.state.deletingValue)}
-                                                title="Delete"
+                                                title={this.state.isBtnLoading ? 'Deleting...' : 'Delete'}
                                                 color="red"
+                                                disabled={this.state.isBtnLoading}
                                             />
                                         </View>
                                     </View>
