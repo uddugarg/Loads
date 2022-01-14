@@ -25,7 +25,7 @@ const Header = ({ navigation, routeName }) => {
 
     useEffect(() => {
         auth.onAuthStateChanged(user => {
-            if (user.email === 'test@never.com' || user.email === 'pranjalag5@gmail.com ') {
+            if (user.email === 'test@never.com' || user.email === 'pranjalag5@gmail.com') {
                 setAdminUser(true)
             } else {
                 setAdminUser(false);
