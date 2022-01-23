@@ -139,7 +139,7 @@ export default class PaddyLoadForm extends Component {
             } else {
                 this.setState({ isLoading: true })
 
-                const response = await fetch(`https://v1.nocodeapi.com/uddugarg/google_sheets/DVrYwNXAcqbhynGY?tabId=Paddy(Loading)`, {
+                const response = await fetch(`https://v1.nocodeapi.com/loads/google_sheets/QjvfzhtfFbtylEYC?tabId=Paddy(Loading)`, {
                     method: 'POST',
                     headers: {
                         "Content-Type": 'application/json'

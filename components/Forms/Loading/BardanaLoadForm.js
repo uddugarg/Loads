@@ -85,7 +85,7 @@ export default class BardanaLoadForm extends Component {
             } else {
                 this.setState({ isLoading: true })
 
-                const response = await fetch(`https://v1.nocodeapi.com/uddugarg/google_sheets/DVrYwNXAcqbhynGY?tabId=Bardana(Loading)`, {
+                const response = await fetch(`https://v1.nocodeapi.com/loads/google_sheets/QjvfzhtfFbtylEYC?tabId=Bardana(Loading)`, {
                     method: 'POST',
                     headers: {
                         "Content-Type": 'application/json'

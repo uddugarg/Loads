@@ -126,7 +126,7 @@ export default class RiceProdForm extends Component {
                 // nextStep();
                 this.setState({ isLoading: true })
 
-                const response = await fetch(`https://v1.nocodeapi.com/uddugarg/google_sheets/DVrYwNXAcqbhynGY?tabId=Rice(Production)`, {
+                const response = await fetch(`https://v1.nocodeapi.com/loads/google_sheets/QjvfzhtfFbtylEYC?tabId=Rice(Production)`, {
                     method: 'POST',
                     headers: {
                         "Content-Type": 'application/json'

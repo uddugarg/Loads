@@ -166,7 +166,7 @@ export default class RiceUnloadForm extends Component {
                 // nextStep();
                 this.setState({ isLoading: true })
 
-                const response = await fetch(`https://v1.nocodeapi.com/uddugarg/google_sheets/DVrYwNXAcqbhynGY?tabId=Rice(Unloading)`, {
+                const response = await fetch(`https://v1.nocodeapi.com/loads/google_sheets/QjvfzhtfFbtylEYC?tabId=Rice(Unloading)`, {
                     method: 'POST',
                     headers: {
                         "Content-Type": 'application/json'
