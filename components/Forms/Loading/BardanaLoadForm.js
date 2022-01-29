@@ -70,22 +70,22 @@ export default class BardanaLoadForm extends Component {
 
     async handleNext() {
         try {
-            if (this.state.formData.bardana.loadedFrom === '') {
+            if (this.state.formData.bardana.loadedFrom === '' || this.state.formData.bardana.loadedFrom === 'Select Loaded From') {
                 ToastAndroid.show("Select loaded from", ToastAndroid.SHORT)
-            } else if (this.state.formData.bardana.sentTo === '') {
+            } else if (this.state.formData.bardana.sentTo === '' || this.state.formData.bardana.sentTo === 'Sent To') {
                 ToastAndroid.show("Select Plant", ToastAndroid.SHORT)
             } else if (this.state.formData.bardana.sentTo === 'Party' && this.state.formData.bardana.partyName === '') {
                 ToastAndroid.show("Enter the Party Name", ToastAndroid.SHORT)
-            } else if (this.state.formData.bardana.quality === '') {
-                ToastAndroid.show("Select Quality", ToastAndroid.SHORT)
             } else if (this.state.formData.bardana.bags === '' || this.state.formData.bardana.truck === '') {
                 ToastAndroid.show("Enter the required details", ToastAndroid.SHORT)
-            } else if (this.state.formData.bardana.thekedaar === '') {
+            } else if (this.state.formData.bardana.thekedaar === '' || this.state.formData.bardana.thekedaar === 'Select Thekedar') {
                 ToastAndroid.show("Select a thekedaar", ToastAndroid.SHORT)
             } else {
                 this.setState({ isLoading: true })
 
                 const response = await fetch(`https://v1.nocodeapi.com/loads/google_sheets/QjvfzhtfFbtylEYC?tabId=Bardana(Loading)`, {
+                    //Test Env
+                    // const response = await fetch(`https://v1.nocodeapi.com/uddugarg/google_sheets/DVrYwNXAcqbhynGY?tabId=Bardana(Loading)`, {
                     method: 'POST',
                     headers: {
                         "Content-Type": 'application/json'

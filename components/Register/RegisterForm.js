@@ -15,9 +15,9 @@ const RegisterForm = ({ navigation }) => {
         confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Password must match').required('Name is required')
     })
 
-    const onSignUp = (email, password) => {
+    const onSignUp = async (email, password) => {
         try {
-            auth.createUserWithEmailAndPassword(email, password)
+            await auth.createUserWithEmailAndPassword(email, password)
             ToastAndroid.show("SignUp Successfully!", ToastAndroid.SHORT)
         } catch (error) {
             Alert.alert(error.message)

@@ -108,25 +108,27 @@ export default class RiceProdForm extends Component {
 
     async handleNext() {
         try {
-            if (this.state.formData.rice.prodPlant === '') {
+            if (this.state.formData.rice.prodPlant === '' || this.state.formData.rice.prodPlant === 'Plant Number') {
                 ToastAndroid.show("Select Plant", ToastAndroid.SHORT)
             } else if (this.state.formData.rice.bagType === '' || this.state.formData.rice.bags === '') {
                 ToastAndroid.show("Enter the required details", ToastAndroid.SHORT)
-            } else if (this.state.formData.rice.packing === '') {
+            } else if (this.state.formData.rice.packing === '' || this.state.formData.rice.packing === 'Select Packing(Qty)') {
                 ToastAndroid.show("Enter packing quantity", ToastAndroid.SHORT)
-            } else if (this.state.formData.rice.product === '') {
+            } else if (this.state.formData.rice.product === '' || this.state.formData.rice.product === 'Select Product Type') {
                 ToastAndroid.show("Select Product Type", ToastAndroid.SHORT)
-            } else if (this.state.formData.rice.product === 'Sella' && this.state.formData.rice.sellaQuality === '') {
+            } else if (this.state.formData.rice.product === 'Sella' && (this.state.formData.rice.sellaQuality === '' || this.state.formData.rice.sellaQuality === 'Select Sella Type')) {
                 ToastAndroid.show("Enter Sella Quality", ToastAndroid.SHORT)
-            } else if (this.state.formData.rice.product === 'Steam' && this.state.formData.rice.steamQuality === '') {
+            } else if (this.state.formData.rice.product === 'Steam' && (this.state.formData.rice.steamQuality === '' || this.state.formData.rice.steamQuality === 'Select Steam Type')) {
                 ToastAndroid.show("Enter Steam Quality", ToastAndroid.SHORT)
-            } else if (this.state.formData.rice.thekedaar === '') {
+            } else if (this.state.formData.rice.thekedaar === '' || this.state.formData.rice.thekedaar === 'Select Thekedar') {
                 ToastAndroid.show("Select a thekedaar", ToastAndroid.SHORT)
             } else {
                 // nextStep();
                 this.setState({ isLoading: true })
 
                 const response = await fetch(`https://v1.nocodeapi.com/loads/google_sheets/QjvfzhtfFbtylEYC?tabId=Rice(Production)`, {
+                    //Test Env
+                    // const response = await fetch(`https://v1.nocodeapi.com/uddugarg/google_sheets/DVrYwNXAcqbhynGY?tabId=Rice(Production)`, {
                     method: 'POST',
                     headers: {
                         "Content-Type": 'application/json'

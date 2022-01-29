@@ -133,31 +133,35 @@ export default class RiceLoadForm extends Component {
 
     async handleNext() {
         try {
-            if (this.state.formData.rice.loadedFrom === '') {
+            if (this.state.formData.rice.loadedFrom === '' || this.state.formData.rice.loadedFrom === "Select Loaded From") {
                 ToastAndroid.show('Select loaded from', ToastAndroid.SHORT)
-            } else if (this.state.formData.rice.loadedFrom === 'Sli Plant' && this.state.formData.rice.sliPlant === '') {
+            } else if (this.state.formData.rice.loadedFrom === 'Sli Plant' && (this.state.formData.rice.sliPlant === '' || this.state.formData.rice.sliPlant === 'Select Plant')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
-            } else if (this.state.formData.rice.loadedFrom === 'Sli Godown' && this.state.formData.rice.sliGodown === '') {
+            } else if (this.state.formData.rice.loadedFrom === 'Sli Godown' && (this.state.formData.rice.sliGodown === '' || this.state.formData.rice.sliGodown === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
-            } else if (this.state.formData.rice.loadedFrom === 'Maharaja Godown' && this.state.formData.rice.maharajaGodown === '') {
+            } else if (this.state.formData.rice.loadedFrom === 'Maharaja Godown' && (this.state.formData.rice.maharajaGodown === '' || this.state.formData.rice.maharajaGodown === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
             } else if (this.state.formData.rice.to === '' || this.state.formData.rice.bags === '' || this.state.formData.rice.truck === '') {
                 ToastAndroid.show("Enter the required details", ToastAndroid.SHORT)
-            } else if (this.state.formData.rice.packing === '') {
+            } else if (this.state.formData.rice.packing === '' || this.state.formData.rice.packing === 'Select Packing(Qty)') {
                 ToastAndroid.show("Enter packing quantity", ToastAndroid.SHORT)
-            } else if (this.state.formData.rice.product === '') {
+            } else if (this.state.formData.rice.product === '' || this.state.formData.rice.product === 'Select Product Type') {
                 ToastAndroid.show("Select Product Type", ToastAndroid.SHORT)
-            } else if (this.state.formData.rice.product === 'Sella' && this.state.formData.rice.sellaQuality === '') {
+            } else if (this.state.formData.rice.product === 'Sella' && (this.state.formData.rice.sellaQuality === '' || this.state.formData.rice.sellaQuality === 'Select Sella Type')) {
                 ToastAndroid.show("Enter Sella Quality", ToastAndroid.SHORT)
-            } else if (this.state.formData.rice.product === 'Steam' && this.state.formData.rice.steamQuality === '') {
+            } else if (this.state.formData.rice.product === 'Steam' && (this.state.formData.rice.steamQuality === '' || this.state.formData.rice.steamQuality === 'Select Steam Type')) {
                 ToastAndroid.show("Enter Steam Quality", ToastAndroid.SHORT)
-            } else if (this.state.formData.rice.thekedaar === '') {
+            } else if (this.state.formData.rice.thekedaar === '' || this.state.formData.rice.thekedaar === 'Select Thekedar') {
                 ToastAndroid.show("Select a thekedaar", ToastAndroid.SHORT)
             } else {
                 this.setState({ isLoading: true })
                 // nextStep();
 
+                //Prod Env
                 const response = await fetch(`https://v1.nocodeapi.com/loads/google_sheets/QjvfzhtfFbtylEYC?tabId=Rice(Loading)`, {
+
+                    //Test Env
+                    // const response = await fetch(`https://v1.nocodeapi.com/uddugarg/google_sheets/DVrYwNXAcqbhynGY?tabId=Rice(Loading)`, {
                     method: 'POST',
                     headers: {
                         "Content-Type": 'application/json'

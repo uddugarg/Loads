@@ -111,21 +111,21 @@ export default class StackReport extends Component {
 
     async handleNext() {
         try {
-            if (this.props.route.params.formData.lab.location === '') {
+            if (this.props.route.params.formData.lab.location === '' || this.props.route.params.formData.lab.location === 'Select Loaded From') {
                 ToastAndroid.show("Select Location", ToastAndroid.SHORT)
-            } else if (this.props.route.params.formData.lab.location === 'Sli Plant' && this.props.route.params.formData.lab.sliPlant === '') {
+            } else if (this.props.route.params.formData.lab.location === 'Sli Plant' && (this.props.route.params.formData.lab.sliPlant === '' || this.props.route.params.formData.lab.sliPlant === 'Select Plant')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
-            } else if (this.props.route.params.formData.lab.location === 'Sli Godown' && this.props.route.params.formData.lab.sliGodown === '') {
+            } else if (this.props.route.params.formData.lab.location === 'Sli Godown' && (this.props.route.params.formData.lab.sliGodown === '' || this.props.route.params.formData.lab.sliGodown === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
-            } else if (this.props.route.params.formData.lab.location === 'Maharaja Godown' && this.props.route.params.formData.lab.maharajaGodown === '') {
+            } else if (this.props.route.params.formData.lab.location === 'Maharaja Godown' && (this.props.route.params.formData.lab.maharajaGodown === '' || his.props.route.params.formData.lab.maharajaGodown === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
             } else if (this.props.route.params.formData.lab.report === '' || this.props.route.params.formData.lab.bags === '' || this.props.route.params.formData.lab.stackNumber === '') {
                 ToastAndroid.show("Enter the required details", ToastAndroid.SHORT)
-            } else if (this.props.route.params.formData.lab.product === '') {
+            } else if (this.props.route.params.formData.lab.product === '' || this.props.route.params.formData.lab.product === 'Select Product Type') {
                 ToastAndroid.show("Select Product Type", ToastAndroid.SHORT)
-            } else if (this.props.route.params.formData.lab.product === 'Sella' && this.props.route.params.formData.lab.sellaQuality === '') {
+            } else if (this.props.route.params.formData.lab.product === 'Sella' && (this.props.route.params.formData.lab.sellaQuality === '' || this.props.route.params.formData.lab.sellaQuality === 'Select Sella Type')) {
                 ToastAndroid.show("Enter Sella Quality", ToastAndroid.SHORT)
-            } else if (this.props.route.params.formData.lab.product === 'Steam' && this.props.route.params.formData.lab.steamQuality === '') {
+            } else if (this.props.route.params.formData.lab.product === 'Steam' && (this.props.route.params.formData.lab.steamQuality === '' || this.props.route.params.formData.lab.steamQuality === 'Select Steam Type')) {
                 ToastAndroid.show("Enter Steam Quality", ToastAndroid.SHORT)
             } else {
                 // nextStep();

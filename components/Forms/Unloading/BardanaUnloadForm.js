@@ -71,24 +71,24 @@ export default class BardanaUnloadForm extends Component {
 
     async handleNext() {
         try {
-            if (this.state.formData.bardana.receivedIn === '') {
-                ToastAndroid.show("Select Received from", ToastAndroid.SHORT)
+            if (this.state.formData.bardana.receivedIn === '' || this.state.formData.bardana.receivedIn === 'Received In') {
+                ToastAndroid.show("Select Received In", ToastAndroid.SHORT)
             } else if (this.state.formData.bardana.receivedIn === 'Other' && this.state.other === '') {
                 ToastAndroid.show("Enter Other plant name", ToastAndroid.SHORT)
-            } else if (this.state.formData.bardana.from === '') {
-                ToastAndroid.show("Select Plant", ToastAndroid.SHORT)
+            } else if (this.state.formData.bardana.from === '' || this.state.formData.bardana.from === 'Received From') {
+                ToastAndroid.show("Select Received from", ToastAndroid.SHORT)
             } else if (this.state.formData.bardana.from === 'Party' && this.state.formData.bardana.partyName === '') {
                 ToastAndroid.show("Enter the Party Name", ToastAndroid.SHORT)
-            } else if (this.state.formData.bardana.quality === '') {
-                ToastAndroid.show("Select Quality", ToastAndroid.SHORT)
             } else if (this.state.formData.bardana.truck === '') {
                 ToastAndroid.show("Enter the required details", ToastAndroid.SHORT)
-            } else if (this.state.formData.bardana.thekedaar === '') {
+            } else if (this.state.formData.bardana.thekedaar === '' || this.state.formData.bardana.thekedaar === 'Select Thekedar') {
                 ToastAndroid.show("Select a thekedaar", ToastAndroid.SHORT)
             } else {
                 this.setState({ isLoading: true })
 
                 const response = await fetch(`https://v1.nocodeapi.com/loads/google_sheets/QjvfzhtfFbtylEYC?tabId=Bardana(Unloading)`, {
+                    //Test Env
+                    // const response = await fetch(`https://v1.nocodeapi.com/uddugarg/google_sheets/DVrYwNXAcqbhynGY?tabId=Bardana(Unloading)`, {
                     method: 'POST',
                     headers: {
                         "Content-Type": 'application/json'

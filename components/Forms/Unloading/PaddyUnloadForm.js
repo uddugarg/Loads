@@ -130,30 +130,32 @@ export default class PaddyUnloadForm extends Component {
 
     async handleNext() {
         try {
-            if (this.state.formData.paddy.receivedIn === '') {
-                ToastAndroid.show("Select loaded from", ToastAndroid.SHORT)
-            } else if (this.state.formData.paddy.receivedIn === 'Paper Mill Godowns' && this.state.formData.paddy.paperMillGo === '') {
+            if (this.state.formData.paddy.receivedIn === '' || this.state.formData.paddy.receivedIn === 'Received In') {
+                ToastAndroid.show("Select received in", ToastAndroid.SHORT)
+            } else if (this.state.formData.paddy.receivedIn === 'Paper Mill Godowns' && (this.state.formData.paddy.paperMillGo === '' || this.state.formData.paddy.paperMillGo === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
-            } else if (this.state.formData.paddy.receivedIn === 'Rudi Mill Godowns' && this.state.formData.paddy.rudiMillGo === '') {
+            } else if (this.state.formData.paddy.receivedIn === 'Rudi Mill Godowns' && (this.state.formData.paddy.rudiMillGo === '' || this.state.formData.paddy.rudiMillGo === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
-            } else if (this.state.formData.paddy.receivedIn === 'Maharaja Godown' && this.state.formData.paddy.maharajaGodown === '') {
+            } else if (this.state.formData.paddy.receivedIn === 'Maharaja Godown' && (this.state.formData.paddy.maharajaGodown === '' || this.state.formData.paddy.maharajaGodown === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
-            } else if (this.state.formData.paddy.receivedIn === 'SLI' && this.state.formData.paddy.sliPlant === '') {
+            } else if (this.state.formData.paddy.receivedIn === 'SLI' && (this.state.formData.paddy.sliPlant === '' || this.state.formData.paddy.sliPlant === 'Select Plant')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
-            } else if (this.state.formData.paddy.receivedIn === 'Haudi Katai' && this.state.formData.paddy.haudiGodown === '') {
+            } else if (this.state.formData.paddy.receivedIn === 'Haudi Katai' && (this.state.formData.paddy.haudiGodown === '' || this.state.formData.paddy.haudiGodown === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
-            } else if (this.state.formData.paddy.packing === '') {
+            } else if (this.state.formData.paddy.packing === '' || this.state.formData.paddy.packing === 'Select Packing(Qty)') {
                 ToastAndroid.show("Enter packing quantity", ToastAndroid.SHORT)
-            } else if (this.state.formData.paddy.quality === '') {
+            } else if (this.state.formData.paddy.quality === '' || this.state.formData.paddy.quality === 'Select Quality') {
                 ToastAndroid.show("Select Quality", ToastAndroid.SHORT)
             } else if (this.state.formData.paddy.bags === '' || this.state.formData.paddy.truck === '' || this.state.formData.paddy.from === '') {
                 ToastAndroid.show("Enter the required details", ToastAndroid.SHORT)
-            } else if (this.state.formData.paddy.thekedaar === '') {
+            } else if (this.state.formData.paddy.thekedaar === '' || this.state.formData.paddy.thekedaar === 'Select Thekedar') {
                 ToastAndroid.show("Select a thekedaar", ToastAndroid.SHORT)
             } else {
                 this.setState({ isLoading: true })
 
                 const response = await fetch(`https://v1.nocodeapi.com/loads/google_sheets/QjvfzhtfFbtylEYC?tabId=Paddy(Unloading)`, {
+                    //Test Env
+                    // const response = await fetch(`https://v1.nocodeapi.com/uddugarg/google_sheets/DVrYwNXAcqbhynGY?tabId=Paddy(Unloading)`, {
                     method: 'POST',
                     headers: {
                         "Content-Type": 'application/json'
