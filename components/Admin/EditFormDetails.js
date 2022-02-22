@@ -138,39 +138,6 @@ const EditFormDetails = ({ navigation }) => {
                             left={props => <List.Icon {...props} icon="truck" />}
                             expanded={expandedRice}
                             onPress={() => { setExpandedRice(!expandedRice) }}>
-                            <List.Item title="Loading Locations" style={{ backgroundColor: 'white', width: '100%' }}
-                                right={props =>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            navigation.navigate('EditDetails', {
-                                                name: 'Loading Locations',
-                                                dbName: 'RiceLoadingLocations'
-                                            })
-                                        }}>
-                                        <List.Icon {...props} icon='pencil' color='blue' />
-                                    </TouchableOpacity>} />
-                            <List.Item title="Unloading Locations" style={{ backgroundColor: 'white' }}
-                                right={props =>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            navigation.navigate('EditDetails', {
-                                                name: 'Unloading Locations',
-                                                dbName: 'RiceUnloadLocations'
-                                            })
-                                        }}>
-                                        <List.Icon {...props} icon='pencil' color='blue' />
-                                    </TouchableOpacity>} />
-                            <List.Item title="Production Locations" style={{ backgroundColor: 'white' }}
-                                right={props =>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            navigation.navigate('EditDetails', {
-                                                name: 'Production Locations',
-                                                dbName: 'RiceProductionLocations'
-                                            })
-                                        }}>
-                                        <List.Icon {...props} icon='pencil' color='blue' />
-                                    </TouchableOpacity>} />
                             <List.Item title="SLI Plant" style={{ backgroundColor: 'white' }}
                                 right={props =>
                                     <TouchableOpacity
@@ -215,6 +182,17 @@ const EditFormDetails = ({ navigation }) => {
                                         }}>
                                         <List.Icon {...props} icon='pencil' color='blue' />
                                     </TouchableOpacity>} />
+                            <List.Item title="Loading Type" style={{ backgroundColor: 'white' }}
+                                right={props =>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            navigation.navigate('EditDetails', {
+                                                name: 'Loading Type',
+                                                dbName: 'RiceLoadingType'
+                                            })
+                                        }}>
+                                        <List.Icon {...props} icon='pencil' color='blue' />
+                                    </TouchableOpacity>} />
                             <List.Item title="Packing Categories" style={{ backgroundColor: 'white' }}
                                 right={props =>
                                     <TouchableOpacity
@@ -222,17 +200,6 @@ const EditFormDetails = ({ navigation }) => {
                                             navigation.navigate('EditDetails', {
                                                 name: 'Packing Categories',
                                                 dbName: 'RicePacking'
-                                            })
-                                        }}>
-                                        <List.Icon {...props} icon='pencil' color='blue' />
-                                    </TouchableOpacity>} />
-                            <List.Item title="Product Categories" style={{ backgroundColor: 'white' }}
-                                right={props =>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            navigation.navigate('EditDetails', {
-                                                name: 'Product Categories',
-                                                dbName: 'RiceProduct'
                                             })
                                         }}>
                                         <List.Icon {...props} icon='pencil' color='blue' />
@@ -270,6 +237,17 @@ const EditFormDetails = ({ navigation }) => {
                                         }}>
                                         <List.Icon {...props} icon='pencil' color='blue' />
                                     </TouchableOpacity>} />
+                            <List.Item title="Shift Time" style={{ backgroundColor: 'white' }}
+                                right={props =>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            navigation.navigate('EditDetails', {
+                                                name: 'Shift Time',
+                                                dbName: 'RiceProductionShift'
+                                            })
+                                        }}>
+                                        <List.Icon {...props} icon='pencil' color='blue' />
+                                    </TouchableOpacity>} />
                         </List.Accordion>
 
                         {/* Paddy */}
@@ -279,28 +257,6 @@ const EditFormDetails = ({ navigation }) => {
                             left={props => <List.Icon {...props} icon="truck" />}
                             expanded={expandedPaddy}
                             onPress={() => setExpandedPaddy(!expandedPaddy)}>
-                            <List.Item title="Loading Locations" style={{ backgroundColor: 'white', width: '100%' }}
-                                right={props =>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            navigation.navigate('EditDetails', {
-                                                name: 'Loading Locations',
-                                                dbName: 'PaddyLoadingLocation'
-                                            })
-                                        }}>
-                                        <List.Icon {...props} icon='pencil' color='blue' />
-                                    </TouchableOpacity>} />
-                            <List.Item title="Unloading Locations" style={{ backgroundColor: 'white', width: '100%' }}
-                                right={props =>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            navigation.navigate('EditDetails', {
-                                                name: 'Unloading Locations',
-                                                dbName: 'PaddyUnloadingLocations'
-                                            })
-                                        }}>
-                                        <List.Icon {...props} icon='pencil' color='blue' />
-                                    </TouchableOpacity>} />
                             <List.Item title="Paper Mill Godown" style={{ backgroundColor: 'white', width: '100%' }}
                                 right={props =>
                                     <TouchableOpacity

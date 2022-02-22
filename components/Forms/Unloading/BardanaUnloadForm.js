@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, Text, ToastAndroid, View, Picker, TextInput, Button, ActivityIndicator } from 'react-native'
+import { SafeAreaView, Text, ToastAndroid, View, Picker, TextInput, Button, ActivityIndicator, Vibration } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { db } from '../../../firebase';
 import Header from '../../Header/Header';
@@ -71,18 +71,26 @@ export default class BardanaUnloadForm extends Component {
 
     async handleNext() {
         try {
+            const ONE_SECOND_IN_MS = 50;
+
             if (this.state.formData.bardana.receivedIn === '' || this.state.formData.bardana.receivedIn === 'Received In') {
                 ToastAndroid.show("Select Received In", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.bardana.receivedIn === 'Other' && this.state.other === '') {
                 ToastAndroid.show("Enter Other plant name", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.bardana.from === '' || this.state.formData.bardana.from === 'Received From') {
                 ToastAndroid.show("Select Received from", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.bardana.from === 'Party' && this.state.formData.bardana.partyName === '') {
                 ToastAndroid.show("Enter the Party Name", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.bardana.truck === '') {
                 ToastAndroid.show("Enter the required details", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.bardana.thekedaar === '' || this.state.formData.bardana.thekedaar === 'Select Thekedar') {
                 ToastAndroid.show("Select a thekedaar", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else {
                 this.setState({ isLoading: true })
 

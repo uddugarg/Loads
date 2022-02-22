@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, Text, View, Picker, TextInput, Button, ToastAndroid, ActivityIndicator } from 'react-native'
+import { SafeAreaView, Text, View, Picker, TextInput, Button, ToastAndroid, ActivityIndicator, Vibration } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { db } from '../../../firebase'
 import Header from '../../Header/Header'
@@ -118,24 +118,35 @@ export default class PaddyLoadForm extends Component {
 
     async handleNext() {
         try {
+            const ONE_SECOND_IN_MS = 50;
+            
             if (this.state.formData.paddy.loadedFrom === '' || this.state.formData.paddy.loadedFrom === 'Select Loaded From') {
                 ToastAndroid.show("Select loaded from", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.paddy.loadedFrom === 'Paper Mill Godowns' && (this.state.formData.paddy.paperMillGo === ''|| this.state.formData.paddy.paperMillGo === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.paddy.loadedFrom === 'Rudi Mill Godowns' && (this.state.formData.paddy.rudiMillGo === '' || this.state.formData.paddy.rudiMillGo === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.paddy.loadedFrom === 'Maharaja Godown' && (this.state.formData.paddy.maharajaGodown === '' || this.state.formData.paddy.maharajaGodown === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.paddy.loadedFrom === 'SLI' && (this.state.formData.paddy.sliPlant === '' || this.state.formData.paddy.sliPlant === 'Select Plant')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.paddy.packing === '' || this.state.formData.paddy.packing === 'Select Packing(Qty)') {
                 ToastAndroid.show("Enter packing quantity", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.paddy.quality === '' || this.state.formData.paddy.quality === 'Select Quality') {
                 ToastAndroid.show("Select Quality", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.paddy.bags === '' || this.state.formData.paddy.truck === '') {
                 ToastAndroid.show("Enter the required details", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.paddy.thekedaar === '' || this.state.formData.paddy.thekedaar === 'Select Thekedar') {
                 ToastAndroid.show("Select a thekedaar", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else {
                 this.setState({ isLoading: true })
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, Text, TextInput, View, Picker, Button, ToastAndroid, ActivityIndicator } from 'react-native'
+import { SafeAreaView, Text, TextInput, View, Picker, Button, ToastAndroid, ActivityIndicator, Vibration } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { db } from '../../../firebase';
 import Header from '../../Header/Header';
@@ -111,22 +111,32 @@ export default class StackReport extends Component {
 
     async handleNext() {
         try {
+            const ONE_SECOND_IN_MS = 50;
+
             if (this.props.route.params.formData.lab.location === '' || this.props.route.params.formData.lab.location === 'Select Loaded From') {
                 ToastAndroid.show("Select Location", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.props.route.params.formData.lab.location === 'Sli Plant' && (this.props.route.params.formData.lab.sliPlant === '' || this.props.route.params.formData.lab.sliPlant === 'Select Plant')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.props.route.params.formData.lab.location === 'Sli Godown' && (this.props.route.params.formData.lab.sliGodown === '' || this.props.route.params.formData.lab.sliGodown === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.props.route.params.formData.lab.location === 'Maharaja Godown' && (this.props.route.params.formData.lab.maharajaGodown === '' || his.props.route.params.formData.lab.maharajaGodown === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.props.route.params.formData.lab.report === '' || this.props.route.params.formData.lab.bags === '' || this.props.route.params.formData.lab.stackNumber === '') {
                 ToastAndroid.show("Enter the required details", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.props.route.params.formData.lab.product === '' || this.props.route.params.formData.lab.product === 'Select Product Type') {
                 ToastAndroid.show("Select Product Type", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.props.route.params.formData.lab.product === 'Sella' && (this.props.route.params.formData.lab.sellaQuality === '' || this.props.route.params.formData.lab.sellaQuality === 'Select Sella Type')) {
                 ToastAndroid.show("Enter Sella Quality", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.props.route.params.formData.lab.product === 'Steam' && (this.props.route.params.formData.lab.steamQuality === '' || this.props.route.params.formData.lab.steamQuality === 'Select Steam Type')) {
                 ToastAndroid.show("Enter Steam Quality", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else {
                 // nextStep();
                 this.setState({ isLoading: true })

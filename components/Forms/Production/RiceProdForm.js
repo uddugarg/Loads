@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, Text, View, Picker, TextInput, Button, ToastAndroid, ActivityIndicator } from 'react-native'
+import { SafeAreaView, Text, View, Picker, TextInput, Button, ToastAndroid, ActivityIndicator, Vibration } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { db } from '../../../firebase';
 import Header from '../../Header/Header';
@@ -20,6 +20,7 @@ export default class RiceProdForm extends Component {
             packing: '',
             bagType: '',
             thekedaar: '',
+            shift: '',
             remarks: '',
             isLoading: false,
             isDataLoading: false,
@@ -30,6 +31,7 @@ export default class RiceProdForm extends Component {
             SteamTypeMenu: [],
             BagTypeMenu: [],
             ThekedaarMenu: [],
+            ThekedaarShiftsMenu: [],
         }
 
         this.handleNext = this.handleNext.bind(this);
@@ -41,6 +43,7 @@ export default class RiceProdForm extends Component {
         this.handlePackingDropdown = this.handlePackingDropdown.bind(this);
         this.handleBagTypeDropdown = this.handleBagTypeDropdown.bind(this);
         this.handleThekedaarDropdown = this.handleThekedaarDropdown.bind(this);
+        this.handleThekedaarShiftsDropdown = this.handleThekedaarShiftsDropdown.bind(this);
         this.PopulateDropDowns = this.PopulateDropDowns.bind(this);
     }
 
@@ -104,24 +107,43 @@ export default class RiceProdForm extends Component {
             .onSnapshot(snapshot => {
                 this.setState({ ThekedaarMenu: snapshot.docs.map(doc => doc.data()) })
             })
+
+        //RiceProductionShift
+        db.collection('RiceProductionShift')
+            .orderBy("value", "asc")
+            .onSnapshot(snapshot => {
+                this.setState({ ThekedaarShiftsMenu: snapshot.docs.map(doc => doc.data()) })
+            })
     }
 
     async handleNext() {
         try {
+            const ONE_SECOND_IN_MS = 50;
+
             if (this.state.formData.rice.prodPlant === '' || this.state.formData.rice.prodPlant === 'Plant Number') {
                 ToastAndroid.show("Select Plant", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.bagType === '' || this.state.formData.rice.bags === '') {
                 ToastAndroid.show("Enter the required details", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.packing === '' || this.state.formData.rice.packing === 'Select Packing(Qty)') {
                 ToastAndroid.show("Enter packing quantity", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.product === '' || this.state.formData.rice.product === 'Select Product Type') {
                 ToastAndroid.show("Select Product Type", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.product === 'Sella' && (this.state.formData.rice.sellaQuality === '' || this.state.formData.rice.sellaQuality === 'Select Sella Type')) {
                 ToastAndroid.show("Enter Sella Quality", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.product === 'Steam' && (this.state.formData.rice.steamQuality === '' || this.state.formData.rice.steamQuality === 'Select Steam Type')) {
                 ToastAndroid.show("Enter Steam Quality", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.thekedaar === '' || this.state.formData.rice.thekedaar === 'Select Thekedar') {
                 ToastAndroid.show("Select a thekedaar", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
+            } else if (this.state.formData.rice.shift === '' || this.state.formData.rice.shift === 'Select Shift') {
+                ToastAndroid.show("Select Shift Time", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else {
                 // nextStep();
                 this.setState({ isLoading: true })
@@ -144,6 +166,7 @@ export default class RiceProdForm extends Component {
                             this.state.formData.rice.packing,
                             this.state.formData.rice.bagType,
                             this.state.formData.rice.thekedaar,
+                            this.state.formData.rice.shift,
                             this.state.formData.rice.remarks,
                             this.props.route.params.user,
                         ]
@@ -160,6 +183,7 @@ export default class RiceProdForm extends Component {
                     packing: '',
                     bagType: '',
                     thekedaar: '',
+                    shift: '',
                     remarks: '',
                 })
 
@@ -183,6 +207,7 @@ export default class RiceProdForm extends Component {
             packing: '',
             bagType: '',
             thekedaar: '',
+            shift: '',
             remarks: '',
         })
 
@@ -224,6 +249,11 @@ export default class RiceProdForm extends Component {
     handleThekedaarDropdown(val) {
         this.setState({ thekedaar: val });
         this.state.formData.rice.thekedaar = val
+    }
+
+    handleThekedaarShiftsDropdown(val) {
+        this.setState({ shift: val });
+        this.state.formData.rice.shift = val
     }
 
 
@@ -329,6 +359,16 @@ export default class RiceProdForm extends Component {
                                     onValueChange={(value) => this.handleThekedaarDropdown(value)}
                                 >
                                     {this.state.ThekedaarMenu.map(item => (
+                                        <Picker.Item key={item.value} label={item.label} value={item.label} color={item.color} />
+                                    ))}
+                                </Picker>
+
+                                <Picker
+                                    selectedValue={this.state.shift}
+                                    style={{ height: 50, width: 250, color: 'white' }}
+                                    onValueChange={(value) => this.handleThekedaarShiftsDropdown(value)}
+                                >
+                                    {this.state.ThekedaarShiftsMenu.map(item => (
                                         <Picker.Item key={item.value} label={item.label} value={item.label} color={item.color} />
                                     ))}
                                 </Picker>

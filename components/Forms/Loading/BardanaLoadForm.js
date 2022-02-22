@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, Text, View, Picker, TextInput, Button, ToastAndroid, ActivityIndicator } from 'react-native'
+import { SafeAreaView, Text, View, Picker, TextInput, Button, ToastAndroid, ActivityIndicator, Vibration } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { db } from '../../../firebase'
 import Header from '../../Header/Header'
@@ -70,16 +70,23 @@ export default class BardanaLoadForm extends Component {
 
     async handleNext() {
         try {
+            const ONE_SECOND_IN_MS = 50;
+
             if (this.state.formData.bardana.loadedFrom === '' || this.state.formData.bardana.loadedFrom === 'Select Loaded From') {
                 ToastAndroid.show("Select loaded from", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.bardana.sentTo === '' || this.state.formData.bardana.sentTo === 'Sent To') {
                 ToastAndroid.show("Select Plant", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.bardana.sentTo === 'Party' && this.state.formData.bardana.partyName === '') {
                 ToastAndroid.show("Enter the Party Name", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.bardana.bags === '' || this.state.formData.bardana.truck === '') {
                 ToastAndroid.show("Enter the required details", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.bardana.thekedaar === '' || this.state.formData.bardana.thekedaar === 'Select Thekedar') {
                 ToastAndroid.show("Select a thekedaar", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else {
                 this.setState({ isLoading: true })
 

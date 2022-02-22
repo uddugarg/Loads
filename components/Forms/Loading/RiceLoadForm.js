@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react'
-import { View, Text, Picker, StyleSheet, SafeAreaView, TextInput, Button, ToastAndroid, Alert, StatusBar, ActivityIndicator } from 'react-native'
+import { View, Text, Picker, StyleSheet, SafeAreaView, TextInput, Button, ToastAndroid, Alert, StatusBar, ActivityIndicator, Vibration } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { db } from '../../../firebase'
 import Header from '../../Header/Header'
@@ -19,6 +19,7 @@ export default class RiceLoadForm extends Component {
             sliGodown: '',
             maharajaGodown: '',
             to: '',
+            type: '',
             packing: '',
             product: '',
             sellaQuality: '',
@@ -34,6 +35,7 @@ export default class RiceLoadForm extends Component {
             SLIPlantMenu: [],
             SLIGodownMenu: [],
             MaharajaGodownMenu: [],
+            RiceLoadingTypeMenu: [],
             PackingMenu: [],
             ProductMenu: [],
             SellaTypeMenu: [],
@@ -48,6 +50,7 @@ export default class RiceLoadForm extends Component {
         this.handleSLIPlantDropdown = this.handleSLIPlantDropdown.bind(this);
         this.handleSLIGodownDropdown = this.handleSLIGodownDropdown.bind(this);
         this.handleMaharajaGodownDropdown = this.handleMaharajaGodownDropdown.bind(this);
+        this.handleRiceLoadingTypeDropdown = this.handleRiceLoadingTypeDropdown.bind(this);
         this.handlePackingDropdown = this.handlePackingDropdown.bind(this);
         this.handleProductDropdown = this.handleProductDropdown.bind(this);
         this.handleSellaQualityDropdown = this.handleSellaQualityDropdown.bind(this);
@@ -95,6 +98,12 @@ export default class RiceLoadForm extends Component {
                 this.setState({ MaharajaGodownMenu: snapshot.docs.map(doc => doc.data()) })
             })
 
+        //RiceLoadingType
+        db.collection('RiceLoadingType')
+            .orderBy("value", "asc")
+            .onSnapshot(snapshot => {
+                this.setState({ RiceLoadingTypeMenu: snapshot.docs.map(doc => doc.data()) })
+            })
         //PackingMenu
         db.collection('RicePacking')
             .orderBy("value", "asc")
@@ -133,26 +142,41 @@ export default class RiceLoadForm extends Component {
 
     async handleNext() {
         try {
+            const ONE_SECOND_IN_MS = 50;
+
             if (this.state.formData.rice.loadedFrom === '' || this.state.formData.rice.loadedFrom === "Select Loaded From") {
                 ToastAndroid.show('Select loaded from', ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.loadedFrom === 'Sli Plant' && (this.state.formData.rice.sliPlant === '' || this.state.formData.rice.sliPlant === 'Select Plant')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.loadedFrom === 'Sli Godown' && (this.state.formData.rice.sliGodown === '' || this.state.formData.rice.sliGodown === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.loadedFrom === 'Maharaja Godown' && (this.state.formData.rice.maharajaGodown === '' || this.state.formData.rice.maharajaGodown === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
+            } else if (this.state.formData.rice.type === '' || this.state.formData.rice.type === 'Select Type') {
+                ToastAndroid.show("Select Type", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.to === '' || this.state.formData.rice.bags === '' || this.state.formData.rice.truck === '') {
                 ToastAndroid.show("Enter the required details", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.packing === '' || this.state.formData.rice.packing === 'Select Packing(Qty)') {
                 ToastAndroid.show("Enter packing quantity", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.product === '' || this.state.formData.rice.product === 'Select Product Type') {
                 ToastAndroid.show("Select Product Type", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.product === 'Sella' && (this.state.formData.rice.sellaQuality === '' || this.state.formData.rice.sellaQuality === 'Select Sella Type')) {
                 ToastAndroid.show("Enter Sella Quality", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.product === 'Steam' && (this.state.formData.rice.steamQuality === '' || this.state.formData.rice.steamQuality === 'Select Steam Type')) {
                 ToastAndroid.show("Enter Steam Quality", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.thekedaar === '' || this.state.formData.rice.thekedaar === 'Select Thekedar') {
                 ToastAndroid.show("Select a thekedaar", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else {
                 this.setState({ isLoading: true })
                 // nextStep();
@@ -174,6 +198,7 @@ export default class RiceLoadForm extends Component {
                             this.state.formData.rice.sliGodown,
                             this.state.formData.rice.maharajaGodown,
                             this.state.formData.rice.to,
+                            this.state.formData.rice.type,
                             this.state.formData.rice.packing,
                             this.state.formData.rice.product,
                             this.state.formData.rice.sellaQuality,
@@ -195,6 +220,7 @@ export default class RiceLoadForm extends Component {
                     sliGodown: '',
                     maharajaGodown: '',
                     to: '',
+                    type: '',
                     packing: '',
                     product: '',
                     sellaQuality: '',
@@ -222,6 +248,7 @@ export default class RiceLoadForm extends Component {
             sliGodown: '',
             maharajaGodown: '',
             to: '',
+            type: '',
             packing: '',
             product: '',
             sellaQuality: '',
@@ -256,6 +283,11 @@ export default class RiceLoadForm extends Component {
     handleMaharajaGodownDropdown(value) {
         this.setState({ maharajaGodown: value });
         this.state.formData.rice.maharajaGodown = value
+    }
+
+    handleRiceLoadingTypeDropdown(value) {
+        this.setState({ type: value });
+        this.state.formData.rice.type = value
     }
 
     handlePackingDropdown(value) {
@@ -365,6 +397,16 @@ export default class RiceLoadForm extends Component {
                                     placeholderTextColor='gray'
                                     value={this.state.to}
                                 />
+
+                                <Picker
+                                    selectedValue={this.state.type}
+                                    style={{ height: 50, width: 250, color: 'white' }}
+                                    onValueChange={(value) => this.handleRiceLoadingTypeDropdown(value)}
+                                >
+                                    {this.state.RiceLoadingTypeMenu.map(item => (
+                                        <Picker.Item key={item.value} label={item.label} value={item.label} color={item.color} />
+                                    ))}
+                                </Picker>
 
                                 <Picker
                                     selectedValue={this.state.packing}

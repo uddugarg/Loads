@@ -30,6 +30,7 @@ const HomeScreen = ({ navigation }) => {
             haudiGodown: '',
             to: '',
             from: '',
+            type:'',
             packing: '',
             product: '',
             sellaQuality: '',
@@ -38,6 +39,7 @@ const HomeScreen = ({ navigation }) => {
             bagType: '',
             truck: '',
             thekedaar: '',
+            shift: '',
             remarks: '',
         },
         paddy: {

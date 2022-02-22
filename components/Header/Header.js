@@ -35,15 +35,13 @@ const Header = ({ navigation, routeName }) => {
 
     // const handleDataFix = async () => {
     //     const rev = [
-    //         { value: 0, label: 'Select Plant', color: 'grey' },
-    //         { value: 1, label: 'Rudi Mill' },
-    //         { value: 2, label: 'Party' },
-    //         { value: 3, label: 'SLI' },
-    //         { value: 4, label: 'Other' },
+    //         { value: 0, label: 'Select Shift', color: 'grey' },
+    //         { value: 1, label: 'Day' },
+    //         { value: 2, label: 'Night' },
     //     ];
     //     const array = await rev.reverse();
     //     array.forEach((doc) => {
-    //         db.collection('BardanaReceivedFrom').add(doc);
+    //         db.collection('RiceProductionShift').add(doc);
     //     })
     //     // db.collection('RiceLoadingLocations').onSnapshot(snapshot => {
     //     //     setData(snapshot.docs.map(doc => ({ id: doc.id, msg: doc.data() })))
@@ -60,6 +58,7 @@ const Header = ({ navigation, routeName }) => {
                 {adminUser &&
                     <TouchableOpacity
                         onPress={() => navigation.push('AdminScreen')}
+                        // onPress={handleDataFix}
                     >
                         <Image style={styles.icon} source={require('../../assets/admin.png')} />
                     </TouchableOpacity>

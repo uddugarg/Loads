@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, Text, ToastAndroid, View, Picker, TextInput, Button, ActivityIndicator } from 'react-native'
+import { SafeAreaView, Text, ToastAndroid, View, Picker, TextInput, Button, ActivityIndicator, Vibration } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { db } from '../../../firebase';
 import Header from '../../Header/Header';
@@ -140,35 +140,48 @@ export default class RiceUnloadForm extends Component {
 
     async handleNext() {
         try {
+            const ONE_SECOND_IN_MS = 50;
+
             if (this.state.formData.rice.receivedIn === '' || this.state.formData.rice.receivedIn === 'Received In') {
                 ToastAndroid.show("Select Received In", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.receivedIn === 'Sli Plant' && (this.state.formData.rice.sliPlant === '' || this.state.formData.rice.sliPlant === 'Select Plant')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.receivedIn === 'Sli Godown' && (this.state.formData.rice.sliGodown === '' || this.state.formData.rice.sliGodown === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.receivedIn === 'Maharaja Godown' && (this.state.formData.rice.maharajaGodown === '' || this.state.formData.rice.maharajaGodown === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.receivedIn === 'Haudi Katai' && (this.state.formData.rice.haudiGodown === '' || this.state.formData.rice.haudiGodown === 'Select Godown')) {
                 ToastAndroid.show("Select Plant/Godown", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.from === '' || this.state.formData.rice.bags === '' || this.state.formData.rice.truck === '') {
                 ToastAndroid.show("Enter the required details", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.packing === '' || this.state.formData.rice.packing === 'Select Packing(Qty)') {
                 ToastAndroid.show("Enter packing quantity", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.product === '' || this.state.formData.rice.product === 'Select Product Type') {
                 ToastAndroid.show("Select Product Type", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.product === 'Sella' && (this.state.formData.rice.sellaQuality === '' || this.state.formData.rice.sellaQuality === 'Select Sella Type')) {
                 ToastAndroid.show("Enter Sella Quality", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.product === 'Steam' && (this.state.formData.rice.steamQuality === '' || this.state.formData.rice.steamQuality === 'Select Steam Type')) {
                 ToastAndroid.show("Enter Steam Quality", ToastAndroid.SHORT)
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
             } else if (this.state.formData.rice.thekedaar === '' || this.state.formData.rice.thekedaar === 'Select Thekedar') {
                 ToastAndroid.show("Select a thekedaar", ToastAndroid.SHORT)
-            }  else {
+                Vibration.vibrate(1 * ONE_SECOND_IN_MS)
+            } else {
                 // nextStep();
                 this.setState({ isLoading: true })
 
                 const response = await fetch(`https://v1.nocodeapi.com/loads/google_sheets/QjvfzhtfFbtylEYC?tabId=Rice(Unloading)`, {
                     //Test Env
-                // const response = await fetch(`https://v1.nocodeapi.com/uddugarg/google_sheets/DVrYwNXAcqbhynGY?tabId=Rice(Unloading)`, {
+                    // const response = await fetch(`https://v1.nocodeapi.com/uddugarg/google_sheets/DVrYwNXAcqbhynGY?tabId=Rice(Unloading)`, {
                     method: 'POST',
                     headers: {
                         "Content-Type": 'application/json'
@@ -386,7 +399,7 @@ export default class RiceUnloadForm extends Component {
                                         this.setState({ from: val })
                                         this.state.formData.rice.from = val;
                                     }}
-                                    placeholder='Received From'
+                                    placeholder='Received From(kahan se aaya)'
                                     placeholderTextColor='gray'
                                     value={this.state.from}
                                 />
