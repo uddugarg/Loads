@@ -179,6 +179,27 @@ export default class RiceUnloadForm extends Component {
                 // nextStep();
                 this.setState({ isLoading: true })
 
+                //Backing up data in firebase
+                const data = {
+                    Date: new Date().toLocaleString(),
+                    ReceivedIn: this.state.formData.rice.receivedIn,
+                    SLIPlant: this.state.formData.rice.sliPlant,
+                    SLIGodown: this.state.formData.rice.sliGodown,
+                    MaharajaGodown: this.state.formData.rice.maharajaGodown,
+                    HaudiGodown: this.state.formData.rice.haudiGodown,
+                    From: this.state.formData.rice.from,
+                    Bags: this.state.formData.rice.bags,
+                    Packing: this.state.formData.rice.packing,
+                    Product: this.state.formData.rice.product,
+                    Sella: this.state.formData.rice.sellaQuality,
+                    Steam: this.state.formData.rice.steamQuality,
+                    Truck: this.state.formData.rice.truck,
+                    Thekedaar: this.state.formData.rice.thekedaar,
+                    Remarks: this.state.formData.rice.remarks,
+                    User: this.props.route.params.user
+                }
+                db.collection('BackupRiceUnloadingData').add(data);
+
                 const response = await fetch(`https://v1.nocodeapi.com/loads/google_sheets/QjvfzhtfFbtylEYC?tabId=Rice(Unloading)`, {
                     //Test Env
                     // const response = await fetch(`https://v1.nocodeapi.com/uddugarg/google_sheets/DVrYwNXAcqbhynGY?tabId=Rice(Unloading)`, {

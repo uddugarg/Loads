@@ -181,6 +181,28 @@ export default class RiceLoadForm extends Component {
                 this.setState({ isLoading: true })
                 // nextStep();
 
+                //Backing up data in firebase
+                const data =
+                {
+                    Date: new Date().toLocaleString(),
+                    LoadedFrom: this.state.formData.rice.loadedFrom,
+                    SLIPlant: this.state.formData.rice.sliPlant,
+                    SLIGodown: this.state.formData.rice.sliGodown,
+                    MaharajaGodown: this.state.formData.rice.maharajaGodown,
+                    TransferTo: this.state.formData.rice.to,
+                    Type: this.state.formData.rice.type,
+                    Packing: this.state.formData.rice.packing,
+                    Product: this.state.formData.rice.product,
+                    Sella: this.state.formData.rice.sellaQuality,
+                    Steam: this.state.formData.rice.steamQuality,
+                    Bags: this.state.formData.rice.bags,
+                    Truck: this.state.formData.rice.truck,
+                    Thekedaar: this.state.formData.rice.thekedaar,
+                    Remarks: this.state.formData.rice.remarks,
+                    User: this.props.route.params.user,
+                }
+                db.collection('BackupRiceLoadingData').add(data);
+
                 //Prod Env
                 const response = await fetch(`https://v1.nocodeapi.com/loads/google_sheets/QjvfzhtfFbtylEYC?tabId=Rice(Loading)`, {
 

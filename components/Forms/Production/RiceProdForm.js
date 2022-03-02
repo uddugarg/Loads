@@ -148,6 +148,24 @@ export default class RiceProdForm extends Component {
                 // nextStep();
                 this.setState({ isLoading: true })
 
+                //Backing up data in firebase
+                const data = {
+                    Date: new Date().toLocaleString(),
+                    ProductionPlant: this.state.formData.rice.prodPlant,
+                    Bags: this.state.formData.rice.bags,
+                    Product: this.state.formData.rice.product,
+                    Sella: this.state.formData.rice.sellaQuality,
+                    Steam: this.state.formData.rice.steamQuality,
+                    Packing: this.state.formData.rice.packing,
+                    BagType: this.state.formData.rice.bagType,
+                    Thekedaar: this.state.formData.rice.thekedaar,
+                    Shifts: this.state.formData.rice.shift,
+                    Remarks: this.state.formData.rice.remarks,
+                    User: this.props.route.params.user,
+                }
+                db.collection('BackupRiceProductionData').add(data);
+
+
                 const response = await fetch(`https://v1.nocodeapi.com/loads/google_sheets/QjvfzhtfFbtylEYC?tabId=Rice(Production)`, {
                     //Test Env
                     // const response = await fetch(`https://v1.nocodeapi.com/uddugarg/google_sheets/DVrYwNXAcqbhynGY?tabId=Rice(Production)`, {
